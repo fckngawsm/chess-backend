@@ -28,7 +28,7 @@
     "@nestjs/typeorm": "^10.0.1",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.5",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
     "postgres": "^3.4.3",
