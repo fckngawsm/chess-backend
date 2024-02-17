@@ -9,8 +9,8 @@ import { UsersModule } from "./users/users.module";
     AuthModule,
     TypeOrmModule.forRoot({
       type: "postgres",
-      host: "chat-postgres", // Используем имя контейнера PostgreSQL из docker-compose.yml
-      port: 5433, // Порт, на котором запущен PostgreSQL в контейнере
+      host: "db",
+      port: 5432,
       username: "postgres",
       password: "kirill",
       database: "chat",
