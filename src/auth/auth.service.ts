@@ -9,11 +9,11 @@ export class AuthService {
   constructor(private userService: UsersService) {}
 
   async registerUser(dto: authUserDto) {
-    const candidate = await this.userService.findOneByPhoneNumber(dto.phone);
+    const candidate = await this.userService.findOneByEmail(dto.email);
 
     if (candidate) {
       throw new HttpException(
-        "User with this phone number already exist",
+        "User with this email already exist",
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -21,7 +21,7 @@ export class AuthService {
     const hash = await bcrypt.hash(dto.password, 10);
 
     const newUser = await this.userService.create({
-      phone: dto.phone,
+      email: dto.email,
       password: hash,
     });
 
@@ -32,11 +32,11 @@ export class AuthService {
   }
 
   async loginUser(dto: authUserDto) {
-    const candidate = await this.userService.findOneByPhoneNumber(dto.phone);
+    const candidate = await this.userService.findOneByEmail(dto.email);
 
     if (!candidate) {
       throw new HttpException(
-        "User with this phone number doesn't exist",
+        "User with this email doesn't exist",
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -50,12 +50,13 @@ export class AuthService {
     const token = jwt.sign(
       {
         id: candidate.id,
-        phone: candidate.phone,
+        email: candidate.email,
         password: candidate.password,
       },
       "secret-key",
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userData } = candidate;
 
     return {

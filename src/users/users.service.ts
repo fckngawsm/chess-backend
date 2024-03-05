@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
 import { User } from "./entities/user.entity";
 
 @Injectable()
@@ -22,9 +21,15 @@ export class UsersService {
   }
 
   async findOneByPhoneNumber(phoneNumber: string) {
-    console.log("check");
     const user = await this.usersRepository.findOne({
       where: { phone: phoneNumber },
+    });
+    return user;
+  }
+
+  async findOneByEmail(email: string) {
+    const user = await this.usersRepository.findOne({
+      where: { email: email },
     });
     return user;
   }
@@ -37,7 +42,7 @@ export class UsersService {
     });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(id: number) {
     return `This action updates a #${id} user`;
   }
 
